@@ -36,7 +36,7 @@ class MissingValueHandler:
         """
         self.data = data
 
-    def fill_missing_values_with_mean(self, columns=None):
+    def fillingWithMean(self, columns=None):
         """
         Fills missing values with column means.
 
@@ -48,7 +48,7 @@ class MissingValueHandler:
         except Exception as e:
             print(f"An error occurred while filling missing values with mean: {e}")
 
-    def fill_missing_values_with_median(self, columns=None):
+    def fillingWithMedian(self, columns=None):
         """
         Fills missing values with column medians.
 
@@ -60,7 +60,7 @@ class MissingValueHandler:
         except Exception as e:
             print(f"An error occurred while filling missing values with median: {e}")
 
-    def fill_missing_values_with_constant(self, constant, columns=None):
+    def filingWithConstant(self, constant, columns=None):
         """
         Fills missing values with the specified constant.
 
@@ -73,7 +73,7 @@ class MissingValueHandler:
         except Exception as e:
             print(f"An error occurred while filling missing values with constant: {e}")
 
-    def delete_missing_values(self, columns=None):
+    def deletingMissingValues(self, columns=None):
         """
         Deletes rows containing missing values from the dataset.
 
@@ -112,7 +112,7 @@ class OutlierHandler:
             raise ValueError("Input data must be a pandas DataFrame.")
         self.data = data
 
-    def handle_outliers_iqr(self, column, threshold=1.5):
+    def handlingOutliersIqr(self, column, threshold=1.5):
         """
         Handles outliers in the specified column using the Interquartile Range (IQR) method.
 
@@ -168,7 +168,7 @@ class Scaler:
         """
         self.data = data
 
-    def min_max_scaling(self, columns):
+    def minMaxScaling(self, columns):
         """
         Scale the specified numerical columns using Min-Max scaling method.
 
@@ -191,7 +191,7 @@ class Scaler:
                 raise ZeroDivisionError(f"Cannot perform Min-Max scaling on column '{column}' because the range is zero.")
             self.data[column] = (self.data[column] - min_val) / (max_val - min_val)
 
-    def standard_scaling(self, columns):
+    def standardScaling(self, columns):
         """
         Scale the specified numerical columns using Standard scaling method.
 
@@ -256,7 +256,7 @@ class TextCleaner:
             raise ValueError("Input data must be a pandas DataFrame.")
         self.data = data
 
-    def remove_stopwords(self, column):
+    def removeStopwords(self, column):
         """
         Removes stopwords from the specified column using NLTK's English stopwords list.
 
@@ -271,7 +271,7 @@ class TextCleaner:
             stop_words = set(stopwords.words('english'))
             self.data[column] = self.data[column].apply(lambda x: ' '.join([word for word in word_tokenize(x) if word.lower() not in stop_words]))
 
-    def lowercase_text(self, column):
+    def lowercaseText(self, column):
         """
         Converts text in the specified column to lowercase.
 
@@ -283,7 +283,7 @@ class TextCleaner:
         except AttributeError:
             raise ValueError(f"Column '{column}' does not exist in the DataFrame.")
 
-    def remove_punctuation(self, column):
+    def removePunctuation(self, column):
         """
         Removes punctuation from the specified column.
 
@@ -295,7 +295,7 @@ class TextCleaner:
         except AttributeError:
             raise ValueError(f"Column '{column}' does not exist in the DataFrame.")
 
-    def lemmatize_text(self, column):
+    def lemmatizeText(self, column):
         """
         Lemmatizes the text in the specified column using NLTK's WordNetLemmatizer.
 
@@ -358,7 +358,7 @@ class FeatureEngineer:
             raise ValueError("Input data must be a pandas DataFrame.")
         self.data = data
 
-    def create_new_features(self):
+    def createNewFeatures(self):
         """
         Creates new features based on existing ones.
         Generates 'total_sales' by multiplying 'product_price' and 'quantity', 
@@ -370,7 +370,7 @@ class FeatureEngineer:
         else:
             raise ValueError("Columns 'product_price', 'quantity', and 'age' are required for feature creation.")
 
-    def calculate_percentage(self):
+    def calculatePercentage(self):
         """
         Calculates the percentage of individual sales with respect to total sales.
         Requires 'individual_sales' and 'total_sales' columns to be present.
@@ -380,7 +380,7 @@ class FeatureEngineer:
         else:
             raise ValueError("Columns 'individual_sales' and 'total_sales' are required for percentage calculation.")
 
-    def normalize_features(self, columns):
+    def normalizeFeatures(self, columns):
         """
         Normalizes specified numerical features in the dataset.
         The normalization is done by scaling the values between 0 and 1.
@@ -395,7 +395,7 @@ class FeatureEngineer:
                 raise ValueError(f"Column '{column}' not found in the dataset.")
             self.data[f'{column}_normalized'] = (self.data[column] - self.data[column].min()) / (self.data[column].max() - self.data[column].min())
 
-    def create_interaction_terms(self, feature1, feature2):
+    def createInteractionTerms(self, feature1, feature2):
         """
         Creates interaction terms between two specified features.
         Generates a new feature representing the product of the given features.
@@ -412,7 +412,7 @@ class FeatureEngineer:
         else:
             raise ValueError(f"Columns '{feature1}' and '{feature2}' are required for interaction term creation.")
 
-    def detect_weekend(self, date_column):
+    def detectWeekend(self, date_column):
         """
         Detects whether each date in the specified column falls on a weekend.
         Adds a binary column 'is_weekend' indicating if the date is a weekend day (1) or not (0).
@@ -448,7 +448,7 @@ class DataTypeConverter:
         """
         self.data = data
 
-    def convert_to_numeric(self, columns):
+    def convertNumeric(self, columns):
         """
         Converts specified columns to numeric data type.
 
@@ -457,7 +457,7 @@ class DataTypeConverter:
         """
         self.data[columns] = self.data[columns].apply(pd.to_numeric, errors='coerce')
 
-    def convert_to_categorical(self, columns):
+    def convertToCategorical(self, columns):
         """
         Converts specified columns to categorical data type.
 
@@ -517,7 +517,7 @@ class CategoricalEncoder:
             raise ValueError("Input data must be a pandas DataFrame.")
         self.data = data
 
-    def one_hot_encode(self, columns):
+    def oneHotEncode(self, columns):
         """
         Encode categorical variables using one-hot encoding.
 
@@ -535,7 +535,7 @@ class CategoricalEncoder:
         except KeyError as e:
             print(f"Error: One or more specified columns {e} not found in the DataFrame.")
 
-    def label_encode(self, columns):
+    def labelEncode(self, columns):
         """
         Encode categorical variables using label encoding.
 
@@ -583,7 +583,7 @@ class DateTimeHandler:
         """
         self.data = data
 
-    def extract_date_features(self, column):
+    def extractDateFeatures(self, column):
         """
         Extracts various date and time features from the specified column and adds them as new columns to the DataFrame.
 
